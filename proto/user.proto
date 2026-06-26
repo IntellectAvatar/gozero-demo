@@ -1,0 +1,89 @@
+syntax = "proto3";
+
+package user;
+option go_package = "gozero-demo/rpc/user/pb";
+
+// ======================== 用户 ========================
+
+message UserInfo {
+  int64  id       = 1;
+  string username = 2;
+  string email    = 3;
+  int64  created_at = 4;
+  int64  updated_at = 5;
+}
+
+message GetUserRequest { int64 id = 1; }
+message GetUserResponse { UserInfo user = 1; }
+
+message ListUsersRequest  { int32 page = 1; int32 page_size = 2; }
+message ListUsersResponse  { repeated UserInfo users = 1; int64 total = 2; }
+
+message CreateUserRequest  { string username = 1; string password = 2; string email = 3; }
+message CreateUserResponse { UserInfo user = 1; }
+
+message UpdateUserRequest  { int64 id = 1; string email = 2; }
+message UpdateUserResponse { UserInfo user = 1; }
+
+message UpdatePasswordRequest  { int64 id = 1; string old_password = 2; string new_password = 3; }
+message UpdatePasswordResponse {}
+
+// ======================== 角色 ========================
+
+message RoleInfo {
+  int64  id          = 1;
+  string name        = 2;
+  string code        = 3;
+  string description = 4;
+}
+
+message ListRolesRequest  {}
+message ListRolesResponse  { repeated RoleInfo roles = 1; }
+
+message AssignRoleRequest   { int64 user_id = 1; int64 role_id = 2; }
+message AssignRoleResponse  {}
+
+message RemoveRoleRequest   { int64 user_id = 1; int64 role_id = 2; }
+message RemoveRoleResponse  {}
+
+message GetUserRolesRequest  { int64 user_id = 1; }
+message GetUserRolesResponse { repeated RoleInfo roles = 1; repeated string permissions = 2; }
+
+// ======================== 权限 ========================
+
+message PermissionInfo {
+  int64  id          = 1;
+  string code        = 2;
+  string name        = 3;
+  string description = 4;
+}
+
+message ListPermissionsRequest  {}
+message ListPermissionsResponse  { repeated PermissionInfo permissions = 1; }
+
+// ======================== 服务 ========================
+
+service User {
+  rpc GetUser(GetUserRequest) returns (GetUserResponse);
+  rpc ListUsers(ListUsersRequest) returns (ListUsersResponse);
+  rpc CreateUser(CreateUserRequest) returns (CreateUserResponse);
+  rpc UpdateUser(UpdateUserRequest) returns (UpdateUserResponse);
+  rpc UpdatePassword(UpdatePasswordRequest) returns (UpdatePasswordResponse);
+
+  rpc ListRoles(ListRolesRequest) returns (ListRolesResponse);
+  rpc AssignRole(AssignRoleRequest) returns (AssignRoleResponse);
+  rpc RemoveRole(RemoveRoleRequest) returns (RemoveRoleResponse);
+  rpc GetUserRoles(GetUserRolesRequest) returns (GetUserRolesResponse);
+  rpc ListPermissions(ListPermissionsRequest) returns (ListPermissionsResponse);
+
+  rpc AssignRolePermission(AssignRolePermissionRequest) returns (AssignRolePermissionResponse);
+  rpc RemoveRolePermission(RemoveRolePermissionRequest) returns (RemoveRolePermissionResponse);
+}
+
+// ======================== 角色权限关联 ========================
+
+message AssignRolePermissionRequest   { int64 role_id = 1; int64 permission_id = 2; }
+message AssignRolePermissionResponse  {}
+
+message RemoveRolePermissionRequest   { int64 role_id = 1; int64 permission_id = 2; }
+message RemoveRolePermissionResponse  {}

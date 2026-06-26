@@ -1,0 +1,38 @@
+Name: user-api
+Host: 0.0.0.0
+Port: 8888
+
+Telemetry:
+  Name: user-api
+  Endpoint: localhost:4317
+  Sampler: 1.0
+  Batcher: otlpgrpc
+
+Middlewares:
+  Log: false
+
+Auth:
+  AccessSecret: "your-jwt-secret-key"
+  AccessExpire: 3600
+
+RateLimit:
+  Enabled: true
+  RPS: 10
+  Burst: 20
+
+UserRpc:
+  Etcd:
+    Hosts:
+      - 127.0.0.1:2379
+    Key: user.rpc
+  NonBlock: true
+  Timeout: 5000
+
+DB:
+  Host: 192.168.211.58
+  Port: 3306
+  User: root
+  Password: Abc123654
+  Database: business
+  MaxConns: 20
+  MaxIdle: 10

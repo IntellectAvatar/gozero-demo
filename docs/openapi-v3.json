@@ -1,0 +1,522 @@
+{
+  "openapi": "3.0.3",
+  "info": {
+    "title": "gozero1 微服务 API",
+    "version": "1.0.0",
+    "description": "RBAC 权限模型: 用户 → 角色 → 权限\n\nroles: admin/user\npermissions: user:read, user:write, user:delete, role:read, role:assign"
+  },
+  "servers": [
+    {
+      "url": "http://localhost:8888"
+    }
+  ],
+  "tags": [
+    {
+      "name": "auth",
+      "description": "认证（公开）"
+    },
+    {
+      "name": "user",
+      "description": "用户（需 JWT）"
+    },
+    {
+      "name": "admin",
+      "description": "管理（需 JWT + role:assign 权限）"
+    }
+  ],
+  "components": {
+    "securitySchemes": {
+      "bearerAuth": {
+        "type": "http",
+        "scheme": "bearer",
+        "bearerFormat": "JWT"
+      }
+    },
+    "schemas": {
+      "Response": {
+        "type": "object",
+        "properties": {
+          "Code": {
+            "type": "integer"
+          },
+          "Message": {
+            "type": "string"
+          },
+          "Data": {
+            "type": "array",
+            "items": {}
+          },
+          "Total": {
+            "type": "integer"
+          }
+        }
+      },
+      "RegisterRequest": {
+        "type": "object",
+        "required": [
+          "Username",
+          "Password"
+        ],
+        "properties": {
+          "Username": {},
+          "Password": {
+            "minLength": 6
+          },
+          "Email": {}
+        },
+        "example": {
+          "Username": "admin",
+          "Password": "123456",
+          "Email": "admin@test.com"
+        }
+      },
+      "LoginRequest": {
+        "type": "object",
+        "required": [
+          "Username",
+          "Password"
+        ],
+        "properties": {
+          "Username": {},
+          "Password": {}
+        }
+      },
+      "LoginResponse": {
+        "type": "object",
+        "properties": {
+          "Token": {},
+          "Expire": {
+            "type": "integer"
+          }
+        }
+      },
+      "UserInfo": {
+        "type": "object",
+        "properties": {
+          "Id": {
+            "type": "integer"
+          },
+          "Username": {},
+          "Email": {}
+        }
+      },
+      "UpdateUserRequest": {
+        "type": "object",
+        "properties": {
+          "Email": {}
+        }
+      },
+      "UpdatePasswordRequest": {
+        "type": "object",
+        "required": [
+          "OldPassword",
+          "NewPassword"
+        ],
+        "properties": {
+          "OldPassword": {},
+          "NewPassword": {
+            "minLength": 6
+          }
+        }
+      },
+      "ListResponse": {
+        "type": "object",
+        "properties": {
+          "Data": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/UserInfo"
+            }
+          },
+          "Total": {
+            "type": "integer"
+          }
+        }
+      },
+      "RoleInfo": {
+        "type": "object",
+        "properties": {
+          "Id": {
+            "type": "integer"
+          },
+          "Name": {},
+          "Code": {},
+          "Description": {}
+        }
+      },
+      "PermissionInfo": {
+        "type": "object",
+        "properties": {
+          "Id": {
+            "type": "integer"
+          },
+          "Code": {},
+          "Name": {},
+          "Description": {}
+        }
+      },
+      "AssignRoleRequest": {
+        "type": "object",
+        "required": [
+          "UserId",
+          "RoleId"
+        ],
+        "properties": {
+          "UserId": {
+            "type": "integer"
+          },
+          "RoleId": {
+            "type": "integer"
+          }
+        }
+      },
+      "ErrorBody": {
+        "type": "object",
+        "properties": {
+          "Code": {
+            "type": "integer"
+          },
+          "Message": {}
+        },
+        "example": {
+          "Code": 40300,
+          "Message": "无权限访问"
+        }
+      }
+    }
+  },
+  "paths": {
+    "/user/register": {
+      "post": {
+        "tags": [
+          "auth"
+        ],
+        "summary": "注册",
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/RegisterRequest"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "成功"
+          },
+          "409": {
+            "description": "用户名已存在"
+          }
+        }
+      }
+    },
+    "/user/login": {
+      "post": {
+        "tags": [
+          "auth"
+        ],
+        "summary": "登录 (JWT 含 roles+permissions)",
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/LoginRequest"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "成功"
+          },
+          "401": {
+            "description": "用户名或密码错误"
+          }
+        }
+      }
+    },
+    "/user/info": {
+      "post": {
+        "tags": [
+          "user"
+        ],
+        "summary": "当前用户 (JWT)",
+        "security": [
+          {
+            "bearerAuth": []
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "成功"
+          }
+        }
+      }
+    },
+    "/user/update": {
+      "put": {
+        "tags": [
+          "user"
+        ],
+        "summary": "修改邮箱 (JWT)",
+        "security": [
+          {
+            "bearerAuth": []
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/UpdateUserRequest"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {}
+        }
+      }
+    },
+    "/user/password": {
+      "put": {
+        "tags": [
+          "user"
+        ],
+        "summary": "修改密码 (JWT)",
+        "security": [
+          {
+            "bearerAuth": []
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/UpdatePasswordRequest"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {},
+          "403": {
+            "description": "旧密码错误"
+          }
+        }
+      }
+    },
+    "/user/list": {
+      "get": {
+        "tags": [
+          "user"
+        ],
+        "summary": "用户列表 (JWT, 分页)",
+        "security": [
+          {
+            "bearerAuth": []
+          }
+        ],
+        "parameters": [
+          {
+            "name": "Page",
+            "in": "query",
+            "schema": {
+              "type": "integer",
+              "default": 1
+            }
+          },
+          {
+            "name": "PageSize",
+            "in": "query",
+            "schema": {
+              "type": "integer",
+              "default": 20
+            }
+          }
+        ],
+        "responses": {
+          "200": {}
+        }
+      }
+    },
+    "/role/list": {
+      "get": {
+        "tags": [
+          "user"
+        ],
+        "summary": "角色列表 (JWT)",
+        "security": [
+          {
+            "bearerAuth": []
+          }
+        ],
+        "responses": {
+          "200": {}
+        }
+      }
+    },
+    "/permission/list": {
+      "get": {
+        "tags": [
+          "user"
+        ],
+        "summary": "权限列表 (JWT)",
+        "security": [
+          {
+            "bearerAuth": []
+          }
+        ],
+        "responses": {
+          "200": {}
+        }
+      }
+    },
+    "/role/assign": {
+      "post": {
+        "tags": [
+          "admin"
+        ],
+        "summary": "分配角色 (JWT + role:assign)",
+        "security": [
+          {
+            "bearerAuth": []
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/AssignRoleRequest"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {},
+          "403": {
+            "description": "权限不足"
+          }
+        }
+      }
+    },
+    "/role/remove": {
+      "post": {
+        "tags": [
+          "admin"
+        ],
+        "summary": "移除角色 (JWT + role:assign)",
+        "security": [
+          {
+            "bearerAuth": []
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/AssignRoleRequest"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {}
+        }
+      }
+    },
+    "/role/permission/assign": {
+      "post": {
+        "tags": [
+          "admin"
+        ],
+        "summary": "给角色分配权限 (JWT + role:assign)",
+        "security": [
+          {
+            "bearerAuth": []
+          }
+        ],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "required": [
+                  "RoleId",
+                  "PermissionId"
+                ],
+                "properties": {
+                  "RoleId": {
+                    "type": "integer"
+                  },
+                  "PermissionId": {
+                    "type": "integer"
+                  }
+                },
+                "example": {
+                  "RoleId": 1,
+                  "PermissionId": 3
+                }
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "成功"
+          },
+          "403": {
+            "description": "权限不足 (Code:40300)"
+          }
+        }
+      }
+    },
+    "/role/permission/remove": {
+      "post": {
+        "tags": [
+          "admin"
+        ],
+        "summary": "移除角色权限 (JWT + role:assign)",
+        "security": [
+          {
+            "bearerAuth": []
+          }
+        ],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "required": [
+                  "RoleId",
+                  "PermissionId"
+                ],
+                "properties": {
+                  "RoleId": {
+                    "type": "integer"
+                  },
+                  "PermissionId": {
+                    "type": "integer"
+                  }
+                }
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "成功"
+          },
+          "403": {
+            "description": "权限不足"
+          }
+        }
+      }
+    }
+  }
+}

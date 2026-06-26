@@ -1,0 +1,30 @@
+Name: user.rpc
+ListenOn: 0.0.0.0:8080
+
+# etcd 服务注册
+Etcd:
+  Hosts:
+    - 127.0.0.1:2379
+  Key: user.rpc
+
+# 链路追踪 (Jaeger via OTLP gRPC)
+Telemetry:
+  Name: user.rpc
+  Endpoint: localhost:4317
+  Sampler: 1.0
+  Batcher: otlpgrpc
+
+Log:
+  ServiceName: user.rpc
+  Mode: console
+  Level: info
+
+# GORM 数据库配置
+DB:
+  Host: 192.168.211.58
+  Port: 3306
+  User: root
+  Password: Abc123654
+  Database: business
+  MaxConns: 20
+  MaxIdle: 10

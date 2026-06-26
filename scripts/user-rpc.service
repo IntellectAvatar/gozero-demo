@@ -1,0 +1,31 @@
+[Unit]
+Description=gozero user-rpc gRPC 服务
+Documentation=https://github.com/zeromicro/go-zero
+After=network.target
+Wants=network.target
+
+[Service]
+Type=simple
+User=nobody
+Group=nogroup
+WorkingDirectory=/opt/gozero-demo
+ExecStart=/opt/gozero-demo/user-rpc -f /opt/gozero-demo/config/rpc/user/user-rpc.yaml
+ExecStop=/bin/kill -SIGTERM $MAINPID
+Restart=on-failure
+RestartSec=5s
+LimitNOFILE=65536
+
+# 安全加固
+NoNewPrivileges=yes
+ProtectSystem=strict
+ProtectHome=yes
+ReadWritePaths=/opt/gozero-demo/logs
+PrivateTmp=yes
+
+# 日志
+StandardOutput=journal
+StandardError=journal
+SyslogIdentifier=user-rpc
+
+[Install]
+WantedBy=multi-user.target

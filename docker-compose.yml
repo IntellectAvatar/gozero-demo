@@ -1,0 +1,46 @@
+version: "3.8"
+
+services:
+  etcd:
+    image: gcr.io/etcd-development/etcd:v3.5.17
+    container_name: gozero-etcd
+    environment:
+      - ETCD_LISTEN_CLIENT_URLS=http://0.0.0.0:2379
+      - ETCD_ADVERTISE_CLIENT_URLS=http://localhost:2379
+    ports:
+      - "2379:2379"
+      - "2380:2380"
+    networks:
+      - gozero-net
+
+  jaeger:
+    image: jaegertracing/all-in-one:1.64.0
+    container_name: gozero-jaeger
+    environment:
+      - COLLECTOR_OTLP_ENABLED=true
+    ports:
+      - "4317:4317"       # OTLP gRPC
+      - "4318:4318"       # OTLP HTTP
+      - "16686:16686"     # Jaeger UI
+    depends_on:
+      - etcd
+    networks:
+      - gozero-net
+
+  etcd-keeper:
+    image: evildecay/etcdkeeper:latest
+    container_name: gozero-etcd-ui
+    ports:
+      - "18080:8080"
+    environment:
+      - HOST=0.0.0.0
+      - ETCD_HOST=etcd
+      - ETCD_PORT=2379
+    extra_hosts:
+      - "host.docker.internal:host-gateway"
+    networks:
+      - gozero-net
+
+networks:
+  gozero-net:
+    driver: bridge
