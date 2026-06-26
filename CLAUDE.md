@@ -46,6 +46,9 @@ protoc --proto_path=. --go_out=. --go-grpc_out=. proto/user.proto
 |------|------|------|------|------|
 | `/user/register` | POST | 无 | — | 注册，bcrypt 哈希密码 |
 | `/user/login` | POST | 无 | — | 登录，校验 DB → 签发 JWT（含 roles+permissions） |
+| `/user/sms/send` | POST | 无 | — | 发送验证码到手机号（60 秒限频） |
+| `/user/sms/register` | POST | 无 | — | 短信验证码注册，自动生成用户名 |
+| `/user/sms/login` | POST | 无 | — | 短信验证码登录，校验成功签发 JWT |
 | `/user/info` | POST | JWT | — | 查当前用户（userId 从 JWT 取） |
 | `/user/update` | PUT | JWT | — | 修改邮箱 |
 | `/user/password` | PUT | JWT | — | 修改密码（需旧密码验证） |
@@ -87,7 +90,7 @@ PermissionMiddleware 校验:      │
 - **`user.go`** — 主入口，加载配置、初始化服务上下文、注册路由和中间件、启动服务
 - **`internal/config/config.go`** — 配置结构体，内嵌 `rest.RestConf`，含 Auth、RateLimit、UserRpc、DB 配置
 - **`internal/svc/servicecontext.go`** — 服务上下文，持有 DB、RPC 客户端、限流器等
-- **`internal/handler/routes.go`** — 路由注册，按鉴权分组（公开: register/login, JWT: info/update/password/list）
+- **`internal/handler/routes.go`** — 路由注册，按鉴权分组（公开: register/login/sms, JWT: info/update/password/list）
 - **`internal/handler/xxxhandler.go`** — HTTP handler 层，负责解析请求、调用 logic、写回响应
 - **`internal/logic/xxxlogic.go`** — 业务逻辑层。loginlogic 直查 DB + bcrypt；userinfologic 调 rpc + 降级 DB
 - **`internal/types/types.go`** — 请求/响应结构体
@@ -98,7 +101,7 @@ PermissionMiddleware 校验:      │
 - **`service.go`** — 主入口，实现 `pb.UserServer` 接口，通过 `zrpc.MustNewServer` 自动注册到 etcd
 - **`internal/config/config.go`** — 配置结构体，内嵌 `zrpc.RpcServerConf`
 - **`internal/svc/servicecontext.go`** — 服务上下文，启动时 `AutoMigrate` 建表
-- **`internal/logic/`** — 5 个 RPC 的业务逻辑（GetUser, ListUsers, CreateUser, UpdateUser, UpdatePassword），全部操作 DB
+- **`internal/logic/`** — 8 个 RPC 的业务逻辑（GetUser, ListUsers, CreateUser, UpdateUser, UpdatePassword, SendSms, SmsRegister, SmsLogin），全部操作 DB
 - **`internal/model/user.go`** — GORM 模型定义
 
 ### 中间件执行顺序

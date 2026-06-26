@@ -56,6 +56,9 @@
 |------|------|------|
 | `/user/register` | POST | 注册，bcrypt 哈希密码 |
 | `/user/login` | POST | 登录，校验 DB → 签发 JWT（含 roles+permissions） |
+| `/user/sms/send` | POST | 发送验证码到手机号（60 秒限频） |
+| `/user/sms/register` | POST | 短信验证码注册（自动生成用户名 "u_手机号"） |
+| `/user/sms/login` | POST | 短信验证码登录（验证成功签发 JWT） |
 
 ### 用户（需 JWT）
 
@@ -162,10 +165,12 @@ gozero-demo/
 │       │   ├── updatepasswordhandler.go
 │       │   ├── listusershandler.go
 │       │   ├── rbac_handler.go       # 角色/权限管理
+│       │   ├── smshandler.go         # 短信验证码(发送/注册/登录)
 │       │   └── error_helper.go       # 错误码映射
 │       ├── logic/                    # 业务逻辑层
 │       │   ├── loginlogic.go         # 登录(查DB+bcrypt+JWT含RBAC)
 │       │   ├── registerlogic.go
+│       │   ├── smslogic.go           # 短信验证码(发送/注册/登录)
 │       │   ├── userinfologic.go      # 查用户(rpc+降级DB)
 │       │   ├── updateuserlogic.go
 │       │   ├── updatepasswordlogic.go
@@ -192,11 +197,13 @@ gozero-demo/
 │           ├── updateuserlogic.go
 │           ├── updatepasswordlogic.go
 │           ├── listuserslogic.go
-│           └── rbaclogic.go          # RBAC CRUD
-├── proto/user.proto                  # gRPC 服务定义 (10 个 RPC)
+│           ├── rbaclogic.go          # RBAC CRUD
+│           └── smslogic.go           # 短信验证码(发送/注册/登录)
+├── proto/user.proto                  # gRPC 服务定义 (13 个 RPC)
 ├── internal/
 │   ├── database/                     # 共享 GORM 模块
 │   ├── response/                     # 统一响应 {Code, Message, Data[]}
+│   ├── sms/                           # 短信验证码存储 (内存, 60秒限频/5分钟过期)
 │   └── i18n/                         # 中英文国际化
 ├── docs/openapi-v3.json              # API 文档 (OpenAPI 3.0)
 ├── scripts/                          # 构建/部署脚本

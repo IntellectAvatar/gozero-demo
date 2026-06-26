@@ -238,6 +238,128 @@
         }
       }
     },
+    "/user/sms/send": {
+      "post": {
+        "tags": [
+          "auth"
+        ],
+        "summary": "发送短信验证码 (公开)",
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "required": [
+                  "Phone"
+                ],
+                "properties": {
+                  "Phone": {
+                    "type": "string",
+                    "example": "13800138000"
+                  }
+                }
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "发送成功"
+          },
+          "429": {
+            "description": "发送过于频繁，请 60 秒后再试 (Code:40000)"
+          }
+        }
+      }
+    },
+    "/user/sms/register": {
+      "post": {
+        "tags": [
+          "auth"
+        ],
+        "summary": "短信验证码注册 (公开)",
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "required": [
+                  "Phone",
+                  "Code"
+                ],
+                "properties": {
+                  "Phone": {
+                    "type": "string"
+                  },
+                  "Code": {
+                    "type": "string"
+                  }
+                },
+                "example": {
+                  "Phone": "13800138000",
+                  "Code": "123456"
+                }
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "注册成功，返回用户信息"
+          },
+          "409": {
+            "description": "手机号已注册"
+          },
+          "400": {
+            "description": "验证码错误或已过期"
+          }
+        }
+      }
+    },
+    "/user/sms/login": {
+      "post": {
+        "tags": [
+          "auth"
+        ],
+        "summary": "短信验证码登录 (公开，验证成功签发 JWT)",
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "required": [
+                  "Phone",
+                  "Code"
+                ],
+                "properties": {
+                  "Phone": {
+                    "type": "string"
+                  },
+                  "Code": {
+                    "type": "string"
+                  }
+                },
+                "example": {
+                  "Phone": "13800138000",
+                  "Code": "123456"
+                }
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "登录成功，返回 JWT Token + Expire"
+          },
+          "401": {
+            "description": "手机号未注册或验证码错误"
+          }
+        }
+      }
+    },
     "/user/info": {
       "post": {
         "tags": [

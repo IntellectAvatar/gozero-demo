@@ -109,5 +109,8 @@ func (l *SmsLoginLogic) SmsLogin(in *pb.SmsLoginRequest) (*pb.SmsLoginResponse, 
 	}
 	// 返回用户信息，由 api 层签发 JWT
 	l.Infof("短信登录成功: phone=%s id=%d", in.Phone, user.ID)
-	return &pb.SmsLoginResponse{}, nil
+	return &pb.SmsLoginResponse{
+		UserId:   user.ID,
+		Username: user.Username,
+	}, nil
 }

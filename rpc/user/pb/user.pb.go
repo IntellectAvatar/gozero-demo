@@ -1569,6 +1569,8 @@ type SmsLoginResponse struct {
 	state         protoimpl.MessageState `protogen:"open.v1"`
 	Token         string                 `protobuf:"bytes,1,opt,name=token,proto3" json:"token,omitempty"`
 	Expire        int64                  `protobuf:"varint,2,opt,name=expire,proto3" json:"expire,omitempty"`
+	UserId        int64                  `protobuf:"varint,3,opt,name=user_id,json=userId,proto3" json:"user_id,omitempty"`
+	Username      string                 `protobuf:"bytes,4,opt,name=username,proto3" json:"username,omitempty"`
 	unknownFields protoimpl.UnknownFields
 	sizeCache     protoimpl.SizeCache
 }
@@ -1615,6 +1617,20 @@ func (x *SmsLoginResponse) GetExpire() int64 {
 		return x.Expire
 	}
 	return 0
+}
+
+func (x *SmsLoginResponse) GetUserId() int64 {
+	if x != nil {
+		return x.UserId
+	}
+	return 0
+}
+
+func (x *SmsLoginResponse) GetUsername() string {
+	if x != nil {
+		return x.Username
+	}
+	return ""
 }
 
 var File_proto_user_proto protoreflect.FileDescriptor
@@ -1704,10 +1720,12 @@ const file_proto_user_proto_rawDesc = "" +
 	"\x04user\x18\x01 \x01(\v2\x0e.user.UserInfoR\x04user\";\n" +
 	"\x0fSmsLoginRequest\x12\x14\n" +
 	"\x05phone\x18\x01 \x01(\tR\x05phone\x12\x12\n" +
-	"\x04code\x18\x02 \x01(\tR\x04code\"@\n" +
+	"\x04code\x18\x02 \x01(\tR\x04code\"u\n" +
 	"\x10SmsLoginResponse\x12\x14\n" +
 	"\x05token\x18\x01 \x01(\tR\x05token\x12\x16\n" +
-	"\x06expire\x18\x02 \x01(\x03R\x06expire2\x97\b\n" +
+	"\x06expire\x18\x02 \x01(\x03R\x06expire\x12\x17\n" +
+	"\auser_id\x18\x03 \x01(\x03R\x06userId\x12\x1a\n" +
+	"\busername\x18\x04 \x01(\tR\busername2\x97\b\n" +
 	"\x04User\x126\n" +
 	"\aGetUser\x12\x14.user.GetUserRequest\x1a\x15.user.GetUserResponse\x12<\n" +
 	"\tListUsers\x12\x16.user.ListUsersRequest\x1a\x17.user.ListUsersResponse\x12?\n" +

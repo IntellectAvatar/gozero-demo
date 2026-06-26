@@ -102,4 +102,4 @@ message SmsRegisterRequest  { string phone = 1; string code = 2; }
 message SmsRegisterResponse { UserInfo user = 1; }
 
 message SmsLoginRequest  { string phone = 1; string code = 2; }
-message SmsLoginResponse { string token = 1; int64 expire = 2; }
+message SmsLoginResponse { string token = 1; int64 expire = 2; int64 user_id = 3; string username = 4; }
