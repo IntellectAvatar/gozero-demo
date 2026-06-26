@@ -15,6 +15,9 @@ func RegisterHandlers(server *rest.Server, serverCtx *svc.ServiceContext) {
 		[]rest.Route{
 			{Method: http.MethodPost, Path: "/user/register", Handler: RegisterHandler(serverCtx)},
 			{Method: http.MethodPost, Path: "/user/login", Handler: LoginHandler(serverCtx)},
+			{Method: http.MethodPost, Path: "/user/sms/send", Handler: SendSmsHandler(serverCtx)},
+			{Method: http.MethodPost, Path: "/user/sms/register", Handler: SmsRegisterHandler(serverCtx)},
+			{Method: http.MethodPost, Path: "/user/sms/login", Handler: SmsLoginHandler(serverCtx)},
 		},
 	)
 
