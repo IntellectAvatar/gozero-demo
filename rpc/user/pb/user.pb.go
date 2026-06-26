@@ -1329,6 +1329,294 @@ func (*RemoveRolePermissionResponse) Descriptor() ([]byte, []int) {
 	return file_proto_user_proto_rawDescGZIP(), []int{26}
 }
 
+type SendSmsRequest struct {
+	state         protoimpl.MessageState `protogen:"open.v1"`
+	Phone         string                 `protobuf:"bytes,1,opt,name=phone,proto3" json:"phone,omitempty"`
+	unknownFields protoimpl.UnknownFields
+	sizeCache     protoimpl.SizeCache
+}
+
+func (x *SendSmsRequest) Reset() {
+	*x = SendSmsRequest{}
+	mi := &file_proto_user_proto_msgTypes[27]
+	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+	ms.StoreMessageInfo(mi)
+}
+
+func (x *SendSmsRequest) String() string {
+	return protoimpl.X.MessageStringOf(x)
+}
+
+func (*SendSmsRequest) ProtoMessage() {}
+
+func (x *SendSmsRequest) ProtoReflect() protoreflect.Message {
+	mi := &file_proto_user_proto_msgTypes[27]
+	if x != nil {
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		if ms.LoadMessageInfo() == nil {
+			ms.StoreMessageInfo(mi)
+		}
+		return ms
+	}
+	return mi.MessageOf(x)
+}
+
+// Deprecated: Use SendSmsRequest.ProtoReflect.Descriptor instead.
+func (*SendSmsRequest) Descriptor() ([]byte, []int) {
+	return file_proto_user_proto_rawDescGZIP(), []int{27}
+}
+
+func (x *SendSmsRequest) GetPhone() string {
+	if x != nil {
+		return x.Phone
+	}
+	return ""
+}
+
+type SendSmsResponse struct {
+	state         protoimpl.MessageState `protogen:"open.v1"`
+	Code          string                 `protobuf:"bytes,1,opt,name=code,proto3" json:"code,omitempty"`
+	unknownFields protoimpl.UnknownFields
+	sizeCache     protoimpl.SizeCache
+}
+
+func (x *SendSmsResponse) Reset() {
+	*x = SendSmsResponse{}
+	mi := &file_proto_user_proto_msgTypes[28]
+	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+	ms.StoreMessageInfo(mi)
+}
+
+func (x *SendSmsResponse) String() string {
+	return protoimpl.X.MessageStringOf(x)
+}
+
+func (*SendSmsResponse) ProtoMessage() {}
+
+func (x *SendSmsResponse) ProtoReflect() protoreflect.Message {
+	mi := &file_proto_user_proto_msgTypes[28]
+	if x != nil {
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		if ms.LoadMessageInfo() == nil {
+			ms.StoreMessageInfo(mi)
+		}
+		return ms
+	}
+	return mi.MessageOf(x)
+}
+
+// Deprecated: Use SendSmsResponse.ProtoReflect.Descriptor instead.
+func (*SendSmsResponse) Descriptor() ([]byte, []int) {
+	return file_proto_user_proto_rawDescGZIP(), []int{28}
+}
+
+func (x *SendSmsResponse) GetCode() string {
+	if x != nil {
+		return x.Code
+	}
+	return ""
+}
+
+type SmsRegisterRequest struct {
+	state         protoimpl.MessageState `protogen:"open.v1"`
+	Phone         string                 `protobuf:"bytes,1,opt,name=phone,proto3" json:"phone,omitempty"`
+	Code          string                 `protobuf:"bytes,2,opt,name=code,proto3" json:"code,omitempty"`
+	unknownFields protoimpl.UnknownFields
+	sizeCache     protoimpl.SizeCache
+}
+
+func (x *SmsRegisterRequest) Reset() {
+	*x = SmsRegisterRequest{}
+	mi := &file_proto_user_proto_msgTypes[29]
+	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+	ms.StoreMessageInfo(mi)
+}
+
+func (x *SmsRegisterRequest) String() string {
+	return protoimpl.X.MessageStringOf(x)
+}
+
+func (*SmsRegisterRequest) ProtoMessage() {}
+
+func (x *SmsRegisterRequest) ProtoReflect() protoreflect.Message {
+	mi := &file_proto_user_proto_msgTypes[29]
+	if x != nil {
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		if ms.LoadMessageInfo() == nil {
+			ms.StoreMessageInfo(mi)
+		}
+		return ms
+	}
+	return mi.MessageOf(x)
+}
+
+// Deprecated: Use SmsRegisterRequest.ProtoReflect.Descriptor instead.
+func (*SmsRegisterRequest) Descriptor() ([]byte, []int) {
+	return file_proto_user_proto_rawDescGZIP(), []int{29}
+}
+
+func (x *SmsRegisterRequest) GetPhone() string {
+	if x != nil {
+		return x.Phone
+	}
+	return ""
+}
+
+func (x *SmsRegisterRequest) GetCode() string {
+	if x != nil {
+		return x.Code
+	}
+	return ""
+}
+
+type SmsRegisterResponse struct {
+	state         protoimpl.MessageState `protogen:"open.v1"`
+	User          *UserInfo              `protobuf:"bytes,1,opt,name=user,proto3" json:"user,omitempty"`
+	unknownFields protoimpl.UnknownFields
+	sizeCache     protoimpl.SizeCache
+}
+
+func (x *SmsRegisterResponse) Reset() {
+	*x = SmsRegisterResponse{}
+	mi := &file_proto_user_proto_msgTypes[30]
+	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+	ms.StoreMessageInfo(mi)
+}
+
+func (x *SmsRegisterResponse) String() string {
+	return protoimpl.X.MessageStringOf(x)
+}
+
+func (*SmsRegisterResponse) ProtoMessage() {}
+
+func (x *SmsRegisterResponse) ProtoReflect() protoreflect.Message {
+	mi := &file_proto_user_proto_msgTypes[30]
+	if x != nil {
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		if ms.LoadMessageInfo() == nil {
+			ms.StoreMessageInfo(mi)
+		}
+		return ms
+	}
+	return mi.MessageOf(x)
+}
+
+// Deprecated: Use SmsRegisterResponse.ProtoReflect.Descriptor instead.
+func (*SmsRegisterResponse) Descriptor() ([]byte, []int) {
+	return file_proto_user_proto_rawDescGZIP(), []int{30}
+}
+
+func (x *SmsRegisterResponse) GetUser() *UserInfo {
+	if x != nil {
+		return x.User
+	}
+	return nil
+}
+
+type SmsLoginRequest struct {
+	state         protoimpl.MessageState `protogen:"open.v1"`
+	Phone         string                 `protobuf:"bytes,1,opt,name=phone,proto3" json:"phone,omitempty"`
+	Code          string                 `protobuf:"bytes,2,opt,name=code,proto3" json:"code,omitempty"`
+	unknownFields protoimpl.UnknownFields
+	sizeCache     protoimpl.SizeCache
+}
+
+func (x *SmsLoginRequest) Reset() {
+	*x = SmsLoginRequest{}
+	mi := &file_proto_user_proto_msgTypes[31]
+	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+	ms.StoreMessageInfo(mi)
+}
+
+func (x *SmsLoginRequest) String() string {
+	return protoimpl.X.MessageStringOf(x)
+}
+
+func (*SmsLoginRequest) ProtoMessage() {}
+
+func (x *SmsLoginRequest) ProtoReflect() protoreflect.Message {
+	mi := &file_proto_user_proto_msgTypes[31]
+	if x != nil {
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		if ms.LoadMessageInfo() == nil {
+			ms.StoreMessageInfo(mi)
+		}
+		return ms
+	}
+	return mi.MessageOf(x)
+}
+
+// Deprecated: Use SmsLoginRequest.ProtoReflect.Descriptor instead.
+func (*SmsLoginRequest) Descriptor() ([]byte, []int) {
+	return file_proto_user_proto_rawDescGZIP(), []int{31}
+}
+
+func (x *SmsLoginRequest) GetPhone() string {
+	if x != nil {
+		return x.Phone
+	}
+	return ""
+}
+
+func (x *SmsLoginRequest) GetCode() string {
+	if x != nil {
+		return x.Code
+	}
+	return ""
+}
+
+type SmsLoginResponse struct {
+	state         protoimpl.MessageState `protogen:"open.v1"`
+	Token         string                 `protobuf:"bytes,1,opt,name=token,proto3" json:"token,omitempty"`
+	Expire        int64                  `protobuf:"varint,2,opt,name=expire,proto3" json:"expire,omitempty"`
+	unknownFields protoimpl.UnknownFields
+	sizeCache     protoimpl.SizeCache
+}
+
+func (x *SmsLoginResponse) Reset() {
+	*x = SmsLoginResponse{}
+	mi := &file_proto_user_proto_msgTypes[32]
+	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+	ms.StoreMessageInfo(mi)
+}
+
+func (x *SmsLoginResponse) String() string {
+	return protoimpl.X.MessageStringOf(x)
+}
+
+func (*SmsLoginResponse) ProtoMessage() {}
+
+func (x *SmsLoginResponse) ProtoReflect() protoreflect.Message {
+	mi := &file_proto_user_proto_msgTypes[32]
+	if x != nil {
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		if ms.LoadMessageInfo() == nil {
+			ms.StoreMessageInfo(mi)
+		}
+		return ms
+	}
+	return mi.MessageOf(x)
+}
+
+// Deprecated: Use SmsLoginResponse.ProtoReflect.Descriptor instead.
+func (*SmsLoginResponse) Descriptor() ([]byte, []int) {
+	return file_proto_user_proto_rawDescGZIP(), []int{32}
+}
+
+func (x *SmsLoginResponse) GetToken() string {
+	if x != nil {
+		return x.Token
+	}
+	return ""
+}
+
+func (x *SmsLoginResponse) GetExpire() int64 {
+	if x != nil {
+		return x.Expire
+	}
+	return 0
+}
+
 var File_proto_user_proto protoreflect.FileDescriptor
 
 const file_proto_user_proto_rawDesc = "" +
@@ -1404,7 +1692,22 @@ const file_proto_user_proto_rawDesc = "" +
 	"\x1bRemoveRolePermissionRequest\x12\x17\n" +
 	"\arole_id\x18\x01 \x01(\x03R\x06roleId\x12#\n" +
 	"\rpermission_id\x18\x02 \x01(\x03R\fpermissionId\"\x1e\n" +
-	"\x1cRemoveRolePermissionResponse2\xe0\x06\n" +
+	"\x1cRemoveRolePermissionResponse\"&\n" +
+	"\x0eSendSmsRequest\x12\x14\n" +
+	"\x05phone\x18\x01 \x01(\tR\x05phone\"%\n" +
+	"\x0fSendSmsResponse\x12\x12\n" +
+	"\x04code\x18\x01 \x01(\tR\x04code\">\n" +
+	"\x12SmsRegisterRequest\x12\x14\n" +
+	"\x05phone\x18\x01 \x01(\tR\x05phone\x12\x12\n" +
+	"\x04code\x18\x02 \x01(\tR\x04code\"9\n" +
+	"\x13SmsRegisterResponse\x12\"\n" +
+	"\x04user\x18\x01 \x01(\v2\x0e.user.UserInfoR\x04user\";\n" +
+	"\x0fSmsLoginRequest\x12\x14\n" +
+	"\x05phone\x18\x01 \x01(\tR\x05phone\x12\x12\n" +
+	"\x04code\x18\x02 \x01(\tR\x04code\"@\n" +
+	"\x10SmsLoginResponse\x12\x14\n" +
+	"\x05token\x18\x01 \x01(\tR\x05token\x12\x16\n" +
+	"\x06expire\x18\x02 \x01(\x03R\x06expire2\x97\b\n" +
 	"\x04User\x126\n" +
 	"\aGetUser\x12\x14.user.GetUserRequest\x1a\x15.user.GetUserResponse\x12<\n" +
 	"\tListUsers\x12\x16.user.ListUsersRequest\x1a\x17.user.ListUsersResponse\x12?\n" +
@@ -1421,7 +1724,10 @@ const file_proto_user_proto_rawDesc = "" +
 	"\fGetUserRoles\x12\x19.user.GetUserRolesRequest\x1a\x1a.user.GetUserRolesResponse\x12N\n" +
 	"\x0fListPermissions\x12\x1c.user.ListPermissionsRequest\x1a\x1d.user.ListPermissionsResponse\x12]\n" +
 	"\x14AssignRolePermission\x12!.user.AssignRolePermissionRequest\x1a\".user.AssignRolePermissionResponse\x12]\n" +
-	"\x14RemoveRolePermission\x12!.user.RemoveRolePermissionRequest\x1a\".user.RemoveRolePermissionResponseB\x19Z\x17gozero-demo/rpc/user/pbb\x06proto3"
+	"\x14RemoveRolePermission\x12!.user.RemoveRolePermissionRequest\x1a\".user.RemoveRolePermissionResponse\x126\n" +
+	"\aSendSms\x12\x14.user.SendSmsRequest\x1a\x15.user.SendSmsResponse\x12B\n" +
+	"\vSmsRegister\x12\x18.user.SmsRegisterRequest\x1a\x19.user.SmsRegisterResponse\x129\n" +
+	"\bSmsLogin\x12\x15.user.SmsLoginRequest\x1a\x16.user.SmsLoginResponseB\x19Z\x17gozero-demo/rpc/user/pbb\x06proto3"
 
 var (
 	file_proto_user_proto_rawDescOnce sync.Once
@@ -1435,7 +1741,7 @@ func file_proto_user_proto_rawDescGZIP() []byte {
 	return file_proto_user_proto_rawDescData
 }
 
-var file_proto_user_proto_msgTypes = make([]protoimpl.MessageInfo, 27)
+var file_proto_user_proto_msgTypes = make([]protoimpl.MessageInfo, 33)
 var file_proto_user_proto_goTypes = []any{
 	(*UserInfo)(nil),                     // 0: user.UserInfo
 	(*GetUserRequest)(nil),               // 1: user.GetUserRequest
@@ -1464,6 +1770,12 @@ var file_proto_user_proto_goTypes = []any{
 	(*AssignRolePermissionResponse)(nil), // 24: user.AssignRolePermissionResponse
 	(*RemoveRolePermissionRequest)(nil),  // 25: user.RemoveRolePermissionRequest
 	(*RemoveRolePermissionResponse)(nil), // 26: user.RemoveRolePermissionResponse
+	(*SendSmsRequest)(nil),               // 27: user.SendSmsRequest
+	(*SendSmsResponse)(nil),              // 28: user.SendSmsResponse
+	(*SmsRegisterRequest)(nil),           // 29: user.SmsRegisterRequest
+	(*SmsRegisterResponse)(nil),          // 30: user.SmsRegisterResponse
+	(*SmsLoginRequest)(nil),              // 31: user.SmsLoginRequest
+	(*SmsLoginResponse)(nil),             // 32: user.SmsLoginResponse
 }
 var file_proto_user_proto_depIdxs = []int32{
 	0,  // 0: user.GetUserResponse.user:type_name -> user.UserInfo
@@ -1473,35 +1785,42 @@ var file_proto_user_proto_depIdxs = []int32{
 	11, // 4: user.ListRolesResponse.roles:type_name -> user.RoleInfo
 	11, // 5: user.GetUserRolesResponse.roles:type_name -> user.RoleInfo
 	20, // 6: user.ListPermissionsResponse.permissions:type_name -> user.PermissionInfo
-	1,  // 7: user.User.GetUser:input_type -> user.GetUserRequest
-	3,  // 8: user.User.ListUsers:input_type -> user.ListUsersRequest
-	5,  // 9: user.User.CreateUser:input_type -> user.CreateUserRequest
-	7,  // 10: user.User.UpdateUser:input_type -> user.UpdateUserRequest
-	9,  // 11: user.User.UpdatePassword:input_type -> user.UpdatePasswordRequest
-	12, // 12: user.User.ListRoles:input_type -> user.ListRolesRequest
-	14, // 13: user.User.AssignRole:input_type -> user.AssignRoleRequest
-	16, // 14: user.User.RemoveRole:input_type -> user.RemoveRoleRequest
-	18, // 15: user.User.GetUserRoles:input_type -> user.GetUserRolesRequest
-	21, // 16: user.User.ListPermissions:input_type -> user.ListPermissionsRequest
-	23, // 17: user.User.AssignRolePermission:input_type -> user.AssignRolePermissionRequest
-	25, // 18: user.User.RemoveRolePermission:input_type -> user.RemoveRolePermissionRequest
-	2,  // 19: user.User.GetUser:output_type -> user.GetUserResponse
-	4,  // 20: user.User.ListUsers:output_type -> user.ListUsersResponse
-	6,  // 21: user.User.CreateUser:output_type -> user.CreateUserResponse
-	8,  // 22: user.User.UpdateUser:output_type -> user.UpdateUserResponse
-	10, // 23: user.User.UpdatePassword:output_type -> user.UpdatePasswordResponse
-	13, // 24: user.User.ListRoles:output_type -> user.ListRolesResponse
-	15, // 25: user.User.AssignRole:output_type -> user.AssignRoleResponse
-	17, // 26: user.User.RemoveRole:output_type -> user.RemoveRoleResponse
-	19, // 27: user.User.GetUserRoles:output_type -> user.GetUserRolesResponse
-	22, // 28: user.User.ListPermissions:output_type -> user.ListPermissionsResponse
-	24, // 29: user.User.AssignRolePermission:output_type -> user.AssignRolePermissionResponse
-	26, // 30: user.User.RemoveRolePermission:output_type -> user.RemoveRolePermissionResponse
-	19, // [19:31] is the sub-list for method output_type
-	7,  // [7:19] is the sub-list for method input_type
-	7,  // [7:7] is the sub-list for extension type_name
-	7,  // [7:7] is the sub-list for extension extendee
-	0,  // [0:7] is the sub-list for field type_name
+	0,  // 7: user.SmsRegisterResponse.user:type_name -> user.UserInfo
+	1,  // 8: user.User.GetUser:input_type -> user.GetUserRequest
+	3,  // 9: user.User.ListUsers:input_type -> user.ListUsersRequest
+	5,  // 10: user.User.CreateUser:input_type -> user.CreateUserRequest
+	7,  // 11: user.User.UpdateUser:input_type -> user.UpdateUserRequest
+	9,  // 12: user.User.UpdatePassword:input_type -> user.UpdatePasswordRequest
+	12, // 13: user.User.ListRoles:input_type -> user.ListRolesRequest
+	14, // 14: user.User.AssignRole:input_type -> user.AssignRoleRequest
+	16, // 15: user.User.RemoveRole:input_type -> user.RemoveRoleRequest
+	18, // 16: user.User.GetUserRoles:input_type -> user.GetUserRolesRequest
+	21, // 17: user.User.ListPermissions:input_type -> user.ListPermissionsRequest
+	23, // 18: user.User.AssignRolePermission:input_type -> user.AssignRolePermissionRequest
+	25, // 19: user.User.RemoveRolePermission:input_type -> user.RemoveRolePermissionRequest
+	27, // 20: user.User.SendSms:input_type -> user.SendSmsRequest
+	29, // 21: user.User.SmsRegister:input_type -> user.SmsRegisterRequest
+	31, // 22: user.User.SmsLogin:input_type -> user.SmsLoginRequest
+	2,  // 23: user.User.GetUser:output_type -> user.GetUserResponse
+	4,  // 24: user.User.ListUsers:output_type -> user.ListUsersResponse
+	6,  // 25: user.User.CreateUser:output_type -> user.CreateUserResponse
+	8,  // 26: user.User.UpdateUser:output_type -> user.UpdateUserResponse
+	10, // 27: user.User.UpdatePassword:output_type -> user.UpdatePasswordResponse
+	13, // 28: user.User.ListRoles:output_type -> user.ListRolesResponse
+	15, // 29: user.User.AssignRole:output_type -> user.AssignRoleResponse
+	17, // 30: user.User.RemoveRole:output_type -> user.RemoveRoleResponse
+	19, // 31: user.User.GetUserRoles:output_type -> user.GetUserRolesResponse
+	22, // 32: user.User.ListPermissions:output_type -> user.ListPermissionsResponse
+	24, // 33: user.User.AssignRolePermission:output_type -> user.AssignRolePermissionResponse
+	26, // 34: user.User.RemoveRolePermission:output_type -> user.RemoveRolePermissionResponse
+	28, // 35: user.User.SendSms:output_type -> user.SendSmsResponse
+	30, // 36: user.User.SmsRegister:output_type -> user.SmsRegisterResponse
+	32, // 37: user.User.SmsLogin:output_type -> user.SmsLoginResponse
+	23, // [23:38] is the sub-list for method output_type
+	8,  // [8:23] is the sub-list for method input_type
+	8,  // [8:8] is the sub-list for extension type_name
+	8,  // [8:8] is the sub-list for extension extendee
+	0,  // [0:8] is the sub-list for field type_name
 }
 
 func init() { file_proto_user_proto_init() }
@@ -1515,7 +1834,7 @@ func file_proto_user_proto_init() {
 			GoPackagePath: reflect.TypeOf(x{}).PkgPath(),
 			RawDescriptor: unsafe.Slice(unsafe.StringData(file_proto_user_proto_rawDesc), len(file_proto_user_proto_rawDesc)),
 			NumEnums:      0,
-			NumMessages:   27,
+			NumMessages:   33,
 			NumExtensions: 0,
 			NumServices:   1,
 		},

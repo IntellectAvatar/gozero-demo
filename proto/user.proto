@@ -78,6 +78,11 @@ service User {
 
   rpc AssignRolePermission(AssignRolePermissionRequest) returns (AssignRolePermissionResponse);
   rpc RemoveRolePermission(RemoveRolePermissionRequest) returns (RemoveRolePermissionResponse);
+
+  // ======================== 手机验证码 ========================
+  rpc SendSms(SendSmsRequest) returns (SendSmsResponse);
+  rpc SmsRegister(SmsRegisterRequest) returns (SmsRegisterResponse);
+  rpc SmsLogin(SmsLoginRequest) returns (SmsLoginResponse);
 }
 
 // ======================== 角色权限关联 ========================
@@ -87,3 +92,14 @@ message AssignRolePermissionResponse  {}
 
 message RemoveRolePermissionRequest   { int64 role_id = 1; int64 permission_id = 2; }
 message RemoveRolePermissionResponse  {}
+
+// ======================== 手机验证码 ========================
+
+message SendSmsRequest  { string phone = 1; }
+message SendSmsResponse { string code = 1; } // 仅测试环境返回，生产不返回
+
+message SmsRegisterRequest  { string phone = 1; string code = 2; }
+message SmsRegisterResponse { UserInfo user = 1; }
+
+message SmsLoginRequest  { string phone = 1; string code = 2; }
+message SmsLoginResponse { string token = 1; int64 expire = 2; }

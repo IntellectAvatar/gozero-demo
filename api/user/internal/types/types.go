@@ -89,3 +89,19 @@ type AssignRolePermissionRequest struct {
 	RoleID       int64 `json:"RoleId"`
 	PermissionID int64 `json:"PermissionId"`
 }
+
+// ======================== 手机验证码 ========================
+
+type SendSmsRequest struct {
+	Phone string `json:"Phone"`
+}
+
+type SmsLoginRequest struct {
+	Phone string `json:"Phone"`
+	Code  string `json:"Code"`
+}
+
+type SmsRegisterRequest struct {
+	Phone string `json:"Phone"`
+	Code  string `json:"Code"`
+}

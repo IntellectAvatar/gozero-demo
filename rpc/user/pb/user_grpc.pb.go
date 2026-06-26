@@ -31,6 +31,9 @@ const (
 	User_ListPermissions_FullMethodName      = "/user.User/ListPermissions"
 	User_AssignRolePermission_FullMethodName = "/user.User/AssignRolePermission"
 	User_RemoveRolePermission_FullMethodName = "/user.User/RemoveRolePermission"
+	User_SendSms_FullMethodName              = "/user.User/SendSms"
+	User_SmsRegister_FullMethodName          = "/user.User/SmsRegister"
+	User_SmsLogin_FullMethodName             = "/user.User/SmsLogin"
 )
 
 // UserClient is the client API for User service.
@@ -49,6 +52,10 @@ type UserClient interface {
 	ListPermissions(ctx context.Context, in *ListPermissionsRequest, opts ...grpc.CallOption) (*ListPermissionsResponse, error)
 	AssignRolePermission(ctx context.Context, in *AssignRolePermissionRequest, opts ...grpc.CallOption) (*AssignRolePermissionResponse, error)
 	RemoveRolePermission(ctx context.Context, in *RemoveRolePermissionRequest, opts ...grpc.CallOption) (*RemoveRolePermissionResponse, error)
+	// ======================== 手机验证码 ========================
+	SendSms(ctx context.Context, in *SendSmsRequest, opts ...grpc.CallOption) (*SendSmsResponse, error)
+	SmsRegister(ctx context.Context, in *SmsRegisterRequest, opts ...grpc.CallOption) (*SmsRegisterResponse, error)
+	SmsLogin(ctx context.Context, in *SmsLoginRequest, opts ...grpc.CallOption) (*SmsLoginResponse, error)
 }
 
 type userClient struct {
@@ -179,6 +186,36 @@ func (c *userClient) RemoveRolePermission(ctx context.Context, in *RemoveRolePer
 	return out, nil
 }
 
+func (c *userClient) SendSms(ctx context.Context, in *SendSmsRequest, opts ...grpc.CallOption) (*SendSmsResponse, error) {
+	cOpts := append([]grpc.CallOption{grpc.StaticMethod()}, opts...)
+	out := new(SendSmsResponse)
+	err := c.cc.Invoke(ctx, User_SendSms_FullMethodName, in, out, cOpts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
+func (c *userClient) SmsRegister(ctx context.Context, in *SmsRegisterRequest, opts ...grpc.CallOption) (*SmsRegisterResponse, error) {
+	cOpts := append([]grpc.CallOption{grpc.StaticMethod()}, opts...)
+	out := new(SmsRegisterResponse)
+	err := c.cc.Invoke(ctx, User_SmsRegister_FullMethodName, in, out, cOpts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
+func (c *userClient) SmsLogin(ctx context.Context, in *SmsLoginRequest, opts ...grpc.CallOption) (*SmsLoginResponse, error) {
+	cOpts := append([]grpc.CallOption{grpc.StaticMethod()}, opts...)
+	out := new(SmsLoginResponse)
+	err := c.cc.Invoke(ctx, User_SmsLogin_FullMethodName, in, out, cOpts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
 // UserServer is the server API for User service.
 // All implementations must embed UnimplementedUserServer
 // for forward compatibility.
@@ -195,6 +232,10 @@ type UserServer interface {
 	ListPermissions(context.Context, *ListPermissionsRequest) (*ListPermissionsResponse, error)
 	AssignRolePermission(context.Context, *AssignRolePermissionRequest) (*AssignRolePermissionResponse, error)
 	RemoveRolePermission(context.Context, *RemoveRolePermissionRequest) (*RemoveRolePermissionResponse, error)
+	// ======================== 手机验证码 ========================
+	SendSms(context.Context, *SendSmsRequest) (*SendSmsResponse, error)
+	SmsRegister(context.Context, *SmsRegisterRequest) (*SmsRegisterResponse, error)
+	SmsLogin(context.Context, *SmsLoginRequest) (*SmsLoginResponse, error)
 	mustEmbedUnimplementedUserServer()
 }
 
@@ -240,6 +281,15 @@ func (UnimplementedUserServer) AssignRolePermission(context.Context, *AssignRole
 }
 func (UnimplementedUserServer) RemoveRolePermission(context.Context, *RemoveRolePermissionRequest) (*RemoveRolePermissionResponse, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method RemoveRolePermission not implemented")
+}
+func (UnimplementedUserServer) SendSms(context.Context, *SendSmsRequest) (*SendSmsResponse, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method SendSms not implemented")
+}
+func (UnimplementedUserServer) SmsRegister(context.Context, *SmsRegisterRequest) (*SmsRegisterResponse, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method SmsRegister not implemented")
+}
+func (UnimplementedUserServer) SmsLogin(context.Context, *SmsLoginRequest) (*SmsLoginResponse, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method SmsLogin not implemented")
 }
 func (UnimplementedUserServer) mustEmbedUnimplementedUserServer() {}
 func (UnimplementedUserServer) testEmbeddedByValue()              {}
@@ -478,6 +528,60 @@ func _User_RemoveRolePermission_Handler(srv interface{}, ctx context.Context, de
 	return interceptor(ctx, in, info, handler)
 }
 
+func _User_SendSms_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(SendSmsRequest)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(UserServer).SendSms(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: User_SendSms_FullMethodName,
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(UserServer).SendSms(ctx, req.(*SendSmsRequest))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
+func _User_SmsRegister_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(SmsRegisterRequest)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(UserServer).SmsRegister(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: User_SmsRegister_FullMethodName,
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(UserServer).SmsRegister(ctx, req.(*SmsRegisterRequest))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
+func _User_SmsLogin_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(SmsLoginRequest)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(UserServer).SmsLogin(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: User_SmsLogin_FullMethodName,
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(UserServer).SmsLogin(ctx, req.(*SmsLoginRequest))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
 // User_ServiceDesc is the grpc.ServiceDesc for User service.
 // It's only intended for direct use with grpc.RegisterService,
 // and not to be introspected or modified (even as a copy)
@@ -532,6 +636,18 @@ var User_ServiceDesc = grpc.ServiceDesc{
 		{
 			MethodName: "RemoveRolePermission",
 			Handler:    _User_RemoveRolePermission_Handler,
+		},
+		{
+			MethodName: "SendSms",
+			Handler:    _User_SendSms_Handler,
+		},
+		{
+			MethodName: "SmsRegister",
+			Handler:    _User_SmsRegister_Handler,
+		},
+		{
+			MethodName: "SmsLogin",
+			Handler:    _User_SmsLogin_Handler,
 		},
 	},
 	Streams:  []grpc.StreamDesc{},
