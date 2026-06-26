@@ -2,6 +2,7 @@ package logic
 
 import (
 	"context"
+	"fmt"
 	"testing"
 
 	"gozero-demo/rpc/user/internal/model"
@@ -23,7 +24,7 @@ func setupRpcTestDB(t *testing.T) *gorm.DB {
 		t.Fatalf("建表失败: %v", err)
 	}
 	hashed, _ := bcrypt.GenerateFromPassword([]byte("test-pass"), bcrypt.DefaultCost)
-	db.Create(&model.User{Username: "testuser", Password: string(hashed), Email: "test@test.com"})
+	db.Create(&model.User{Username: "testuser", Password: string(hashed), Email: "test@test.com", Phone: "13800000001"})
 	return db
 }
 
@@ -168,6 +169,7 @@ func TestListUsers_Pagination(t *testing.T) {
 			Username: "extra-" + string(rune('a'+i)),
 			Password: string(hashed),
 			Email:    "test@test.com",
+			Phone:    fmt.Sprintf("1380000000%d", i+2),
 		})
 	}
 	svcCtx := newRpcSvcCtx(db)

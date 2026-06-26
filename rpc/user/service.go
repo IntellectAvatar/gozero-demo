@@ -66,6 +66,17 @@ func (s *UserServer) RemoveRolePermission(ctx context.Context, req *pb.RemoveRol
 	return logic.NewRemoveRolePermissionLogic(ctx, s.svcCtx).RemoveRolePermission(req)
 }
 
+// SMS
+func (s *UserServer) SendSms(ctx context.Context, req *pb.SendSmsRequest) (*pb.SendSmsResponse, error) {
+	return logic.NewSendSmsLogic(ctx, s.svcCtx).SendSms(req)
+}
+func (s *UserServer) SmsRegister(ctx context.Context, req *pb.SmsRegisterRequest) (*pb.SmsRegisterResponse, error) {
+	return logic.NewSmsRegisterLogic(ctx, s.svcCtx).SmsRegister(req)
+}
+func (s *UserServer) SmsLogin(ctx context.Context, req *pb.SmsLoginRequest) (*pb.SmsLoginResponse, error) {
+	return logic.NewSmsLoginLogic(ctx, s.svcCtx).SmsLogin(req)
+}
+
 func main() {
 	flag.Parse()
 

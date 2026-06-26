@@ -20,7 +20,7 @@ func setupRBACTestDB(t *testing.T) *gorm.DB {
 
 	// 种子数据
 	hashed, _ := bcrypt.GenerateFromPassword([]byte("pwd"), bcrypt.DefaultCost)
-	db.Create(&model.User{Username: "admin", Password: string(hashed), Email: "admin@test.com"})
+	db.Create(&model.User{Username: "admin", Password: string(hashed), Email: "admin@test.com", Phone: "13800000001"})
 	db.Create(&model.Role{Code: "admin", Name: "管理员"})
 	db.Create(&model.Role{Code: "user", Name: "用户"})
 	db.Create(&model.Permission{Code: "user:read", Name: "查用户"})
